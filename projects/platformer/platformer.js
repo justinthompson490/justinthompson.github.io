@@ -52,7 +52,7 @@ $(function () {
     createPlatform(1150,605,100,50);
     createPlatform(150,655,1500,145);
     //second floor platforms
-    createPlatform(200,470,1200,25);
+    createPlatform(200,470,1050,25);
     createPlatform(0,500,15,30);
     createPlatform(200,450,5,20)
     // TODO 2
@@ -62,6 +62,10 @@ $(function () {
     // example usage: createCollectable(type, x, y, gravity, bounce)
 
     createCollectable('diamond', 1180, 530, .25, 1);
+    createCollectable('grace', 580, 330, .25, 1);
+    createCollectable('kennedi', 980, 330, .25, 1);
+    createCollectable('max', 280, 330, .25, 1);
+    createCollectable('steve', 780, 330, .25, 1);
 
 
     // TODO 3
@@ -71,6 +75,10 @@ $(function () {
     // example usage: createCannon(side, position, delay, width, height)
 
     createCannon('right',600,1500);
+    createCannon('top',460,2050);
+    createCannon('top',660,1950);
+    createCannon('top',869,1850);
+    createCannon('top',1060,1750);
 
 
     /////////////////////////////////////////////////
