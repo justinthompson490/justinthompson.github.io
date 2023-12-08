@@ -54,7 +54,7 @@ $(function () {
     //second floor platforms
     createPlatform(200,470,1050,25);
     createPlatform(0,500,15,30);
-    createPlatform(200,450,5,20)
+    createPlatform(200,450,5,20);
     // TODO 2
     // Create collectables
     // You must decide on the collectable type, the x position, the y position, the gravity, and the bounce strength
