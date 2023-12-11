@@ -55,6 +55,9 @@ $(function () {
     createPlatform(200,470,1050,25);
     createPlatform(0,500,15,30);
     createPlatform(200,450,5,20);
+    createPlatform(1245,450,5,20);
+    createPlatform(1385,390,15,30);
+    createPlatform(225,270,1000,25);
     // TODO 2
     // Create collectables
     // You must decide on the collectable type, the x position, the y position, the gravity, and the bounce strength
@@ -62,10 +65,10 @@ $(function () {
     // example usage: createCollectable(type, x, y, gravity, bounce)
 
     createCollectable('diamond', 1180, 530, .25, 1);
-    createCollectable('grace', 580, 330, .25, 1);
-    createCollectable('kennedi', 980, 330, .25, 1);
-    createCollectable('max', 280, 330, .25, 1);
-    createCollectable('steve', 780, 330, .25, 1);
+    createCollectable('banana', 580, 330, .25, 1);
+    createCollectable('star', 980, 330, .25, 1);
+    createCollectable('gold', 380, 530, .25, 1);
+    createCollectable('applelogo', 780, 130, .25, 1);
 
 
     // TODO 3
@@ -79,6 +82,8 @@ $(function () {
     createCannon('top',660,1950);
     createCannon('top',869,1850);
     createCannon('top',1060,1750);
+    createCannon('left',250,1250);
+    createCannon('left',-20,5);
 
 
     /////////////////////////////////////////////////
