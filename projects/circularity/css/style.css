@@ -1,4 +1,6 @@
 body {
-    background-image: url(<"C:\Users\20143312\Downloads\helldivers 2 background.jpg">);
+    background-image: url("https://images5.alphacoders.com/133/1337070.jpeg");
     background-color: #16bb69;
+    background-position: center;
+    background-size: cover;
    }
