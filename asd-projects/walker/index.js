@@ -29,18 +29,8 @@ function runProgram(){
 
   }
   // Game Item Objects
-  var walker = {
-    XPos : 0,
-    YPos : 0,
-    speedX : 0,
-    speedY: 0
-  }
-  var walker2 = {
-    XPos : BOARD_WIDTH - WALKER2_WIDTH,
-    YPos : BOARD_HEIGHT - WALKER2_HEIGHT,
-    speedX : 0,
-    speedY: 0
-  }
+  var walker = Walker("#walker", 0, 0, 0, 0, WALKER_WIDTH, WALKER_HEIGHT)
+  var walker2 = Walker("#walker2", BOARD_WIDTH-WALKER_WIDTH, BOARD_HEIGHT-WALKER_HEIGHT, 0, 0, WALKER_WIDTH, WALKER_HEIGHT)
 
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
@@ -55,9 +45,12 @@ function runProgram(){
   by calling this function and executing the code inside.
   */
   function newFrame() {
-    repositionGameItem()
-    redrawGameItem()
-    wallCollision()
+    repositionGameItem(walker);
+    repositionGameItem(walker2);
+    redrawGameItem(walker);
+    redrawGameItem(walker2);
+    wallCollision(walker);
+    wallCollision(walker2);
 
   }
   
@@ -127,45 +120,31 @@ function runProgram(){
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  function repositionGameItem(){
-    walker.XPos += walker.speedX; // update the position of the box along the x-axis
-    walker.YPos += walker.speedY;
-    walker2.XPos += walker2.speedX; // update the position of the box along the x-axis
-    walker2.YPos += walker2.speedY;
+  function repositionGameItem(obj){
+    obj.XPos += obj.speedX; // update the position of the box along the x-axis
+    obj.YPos += obj.speedY;
+
   }
-  function redrawGameItem(){
-    $("#walker").css("left", walker.XPos); // draw the box in the new location, positionX pixels away from the "left"
-    $("#walker").css("top", walker.YPos);
-    $("#walker2").css("left", walker2.XPos); // draw the box in the new location, positionX pixels away from the "left"
-    $("#walker2").css("top", walker2.YPos);
+  function redrawGameItem(obj){
+    $(obj.id).css("left", obj.XPos); // draw the box in the new location, positionX pixels away from the "left"
+    $(obj.id).css("top", obj.YPos);
+
   }
 
-  function wallCollision(){
-    if(walker.XPos === BOARD_WIDTH - WALKER_WIDTH){
-      walker.XPos -= 5;
+  function wallCollision(obj){
+    if(obj.XPos === BOARD_WIDTH - WALKER_WIDTH){
+      obj.XPos -= 5;
     }
-    if(walker.XPos === 0){
-      walker.XPos += 5;
+    if(obj.XPos === 0){
+      obj.XPos += 5;
     }
-    if(walker.YPos === 0){
-      walker.YPos += 5;
+    if(obj.YPos === 0){
+      obj.YPos += 5;
     }
-    if(walker.YPos === BOARD_HEIGHT - WALKER_HEIGHT){
-      walker.YPos -= 5;
+    if(obj.YPos === BOARD_HEIGHT - WALKER_HEIGHT){
+      obj.YPos -= 5;
     }
 
-    if(walker2.XPos === BOARD_WIDTH - WALKER2_WIDTH){
-      walker2.XPos -= 5;
-    }
-    if(walker2.XPos === 0){
-      walker2.XPos += 5;
-    }
-    if(walker2.YPos === 0){
-      walker2.YPos += 5;
-    }
-    if(walker2.YPos === BOARD_HEIGHT - WALKER2_HEIGHT){
-      walker2.YPos -= 5;
-    }
   }
 
   function doCollide(walker, walker2) {
@@ -193,6 +172,19 @@ function runProgram(){
   }
   function showConnection() {
     $("h2").text("They're touching!!!");
+}
+
+function Walker(id, xPos, yPos, speedX, speedY, width, height){
+  let obj = {
+    id : id,
+    xPos : xPos,
+    yPos: yPos,
+    speedX: speedX,
+    speedY: speedY,
+    width: width,
+    height: height,
+  }
+  return obj;
 }
   function endGame() {
     // stop the interval timer
