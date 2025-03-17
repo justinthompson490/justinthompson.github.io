@@ -10,13 +10,42 @@ function runProgram(){
   // Constant Variables
   const FRAME_RATE = 60;
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  
+  const BOARD_WIDTH = $("#board").width();
+  const BOARD_HEIGHT = $("#board").height();
+  const PADDLE_WIDTH = $(".paddle").width();
+  const PADDLE_HEIGHT = $(".paddle").height();
+  const BALL_WIDTH = $("#ball").width();
+  const BALL_HEIGHT = $("#ball").height();
   // Game Item Objects
 
+  const KEY = {
+    "W": 87,
+    "S": 83, 
+    "UP": 38,
+    "DOWN": 40
+  }
 
+
+  function createGameItem(id, speedX, speedY){
+    var gameItem = {
+      id: id,
+      x: parseFloat($(id).css("left")),
+      y: parseFloat($(id).css("top")),
+      speedX: speedX,
+      speedY: speedY,
+      width: $(id).width(),
+      height: $(id).height()
+    }
+    return gameItem;
+  }
+
+  var paddleLeft = createGameItem("#paddleLeft", 0, 0)
+  var paddleRight = createGameItem("#paddleRight", 0, 0)
+  var ball = createGameItem("#ball", (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1), (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1))
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
-  $(document).on('eventType', handleEvent);                           // change 'eventType' to the type of event you want to handle
+  $(document).on('keydown', handleKeyDown);                           // change 'eventType' to the type of event you want to handle
+  $(document).on('keyup', handleKeyUp);
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -27,22 +56,121 @@ function runProgram(){
   by calling this function and executing the code inside.
   */
   function newFrame() {
-    
-
+    showGameItem(paddleLeft)
+    updateGameItem(paddleLeft)
+    showGameItem(paddleRight)
+    updateGameItem(paddleRight)
+    showGameItem(ball)
+    updateGameItem(ball)
+    wallCollision(paddleLeft)
+    wallCollision(paddleRight)
+    ballWallCollision(ball)
+    paddleBallCollision(ball, paddleLeft, paddleRight)
   }
   
   /* 
   Called in response to events.
   */
-  function handleEvent(event) {
-
+  function handleKeyDown(event) {
+    if(event.which === KEY.W){
+      paddleLeft.speedY = -5
+    }
+    if(event.which === KEY.S){
+      paddleLeft.speedY = 5
+    }
+    if(event.which === KEY.UP){
+      paddleRight.speedY = -5
+    }
+    if(event.which === KEY.DOWN){
+      paddleRight.speedY = 5
+    }
+  }
+  function handleKeyUp(event) {
+    if(event.which === KEY.W){
+      paddleLeft.speedY = 0
+    }
+    if(event.which === KEY.S){
+      paddleLeft.speedY = 0
+    }
+    if(event.which === KEY.UP){
+      paddleRight.speedY = 0
+    }
+    if(event.which === KEY.DOWN){
+      paddleRight.speedY = 0
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
+  //Game Info Helper
+  function showGameItem(obj){
+    $(obj.id).css("left", obj.x);
+    $(obj.id).css("top", obj.y);
+  }
+
+  function updateGameItem(obj){
+    obj.x += obj.speedX;
+    obj.y += obj.speedY;
+  }
+
+  function wallCollision(obj){
+    if (obj.x > BOARD_WIDTH - PADDLE_WIDTH || obj.x < 0) {
+      obj.x -= obj.speedX;
+    }
+    if (obj.y > BOARD_HEIGHT - PADDLE_HEIGHT || obj.y < 0) {
+      obj.y -= obj.speedY;
+    } 
+  }
+
+
+  function addPoints(){
+
+  }
+
   
+
+  function makeHitbox(obj){
+    obj.leftX = obj.x;
+    obj.topY = obj.y;
+    obj.rightX = obj.x + obj.width;
+    obj.bottomY = obj.y + obj.height;
+  }
+
+  function paddleBallCollision(ball, paddle1, paddle2){
+    makeHitbox(ball);
+    makeHitbox(paddle1);
+    makeHitbox(paddle2);
+    if(ball.leftX < paddle1.rightX && ball.topY > paddle1.topY && ball.bottomY < paddle1.bottomY){
+      ball.speedX = -ball.speedX;
+    }
+    if(ball.rightX > paddle2.leftX && ball.topY > paddle2.topY && ball.bottomY < paddle2.bottomY){
+      ball.speedX = -ball.speedX;
+    }
+  }
+  
+  function ballWallCollision(obj){
+    makeHitbox(obj);
+    if (obj.topY < 0 || obj.bottomY > BOARD_HEIGHT) {
+      obj.speedY = -obj.speedY;
+    } 
+    if (obj.leftX < 0 || obj.rightX > BOARD_WIDTH) {
+      obj.speedX = -obj.speedX;
+    } 
+  }
+
+  
+
+ //Check boundaries of paddles
+ //determine if objects collide
+ //handle what happens when ball hits walls
+ //handle what happens when ball hits paddles
+ //handle what happens when someone wins
+ //handles the points
+ //handle resetting the game
+
+
   function endGame() {
     // stop the interval timer
     clearInterval(interval);

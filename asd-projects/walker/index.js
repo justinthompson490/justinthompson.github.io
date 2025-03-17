@@ -138,12 +138,7 @@ function runProgram(){
     if(obj.XPos === 0){
       obj.XPos += 5;
     }
-    if(obj.YPos === 0){
-      obj.YPos += 5;
-    }
-    if(obj.YPos === BOARD_HEIGHT - WALKER_HEIGHT){
-      obj.YPos -= 5;
-    }
+    
 
   }
 

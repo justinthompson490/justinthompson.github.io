@@ -1,21 +1,69 @@
 
 body {
-  background-color: darkgreen;
+  height: 98.25vh;
+  background-image: linear-gradient(rgb(130, 3, 193), rgb(85, 191, 218));
+
+}
+
+.glow {
+  font-size: 100px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+
+p {
+  color: white;
+  top: -75px;
+  left: 41.125%;
+  font-family: 'Saira', sans-serif; 
+  position: absolute;
 }
 
 #board {
-  width: 440px;
-  height: 440px;
-  border: 1px solid white;
+  width: 900px;
+  height: 500px;
+  margin: 0 auto;
+  top: 20%;
+  border: 1px solid rgb(0, 0, 0);
   background-color: black;
   position: relative;
 }
 
-#gameItem {
-  background-color: teal;
-  width: 50px;
-  height: 50px;
+.paddle {
+  background-color: rgb(255, 255, 255);
+  width: 25px;
+  height: 100px;
+  border-radius: 15px;
   position: absolute;
-/*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
-/*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
+}
+
+#paddleLeft {
+  left: 10px;
+  top: 210px;  
+}
+
+#paddleRight {
+  left: 865px;
+  top: 210px;  
+}
+#ball {
+  background-color: rgb(0, 238, 255);
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+  position: absolute;
+  left: 437.5px;
+  top: 237.5px;  
 }
