@@ -12,10 +12,6 @@ function runProgram(){
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   const BOARD_WIDTH = $("#board").width();
   const BOARD_HEIGHT = $("#board").height();
-  const PADDLE_WIDTH = $(".paddle").width();
-  const PADDLE_HEIGHT = $(".paddle").height();
-  const BALL_WIDTH = $("#ball").width();
-  const BALL_HEIGHT = $("#ball").height();
   // Game Item Objects
 
   const KEY = {
@@ -66,6 +62,7 @@ function runProgram(){
     wallCollision(paddleRight)
     ballWallCollision(ball)
     paddleBallCollision(ball, paddleLeft, paddleRight)
+    reset(ball);
   }
   
   /* 
@@ -116,18 +113,12 @@ function runProgram(){
   }
 
   function wallCollision(obj){
-    if (obj.x > BOARD_WIDTH - PADDLE_WIDTH || obj.x < 0) {
-      obj.x -= obj.speedX;
-    }
-    if (obj.y > BOARD_HEIGHT - PADDLE_HEIGHT || obj.y < 0) {
+    if (obj.y > BOARD_HEIGHT - obj.height || obj.y < 0) {
       obj.y -= obj.speedY;
     } 
   }
 
 
-  function addPoints(){
-
-  }
 
   
 
@@ -138,14 +129,32 @@ function runProgram(){
     obj.bottomY = obj.y + obj.height;
   }
 
+  function reset(obj){
+    if(obj.x > BOARD_WIDTH - obj.width || obj.x < 0){
+      obj.x = 437.5;
+      obj.y = 237.5;
+      obj.speedX = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1)
+      obj.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1)
+      if(obj.x > BOARD_WIDTH - obj.width){
+        //show player 1 score go up
+      } else if(obj.x < 0){
+        //show player 2 score go up
+      }
+    }
+    
+  }
+
+
   function paddleBallCollision(ball, paddle1, paddle2){
     makeHitbox(ball);
     makeHitbox(paddle1);
     makeHitbox(paddle2);
     if(ball.leftX < paddle1.rightX && ball.topY > paddle1.topY && ball.bottomY < paddle1.bottomY){
+      ball.speedX = ball.speedX + .25;
       ball.speedX = -ball.speedX;
     }
     if(ball.rightX > paddle2.leftX && ball.topY > paddle2.topY && ball.bottomY < paddle2.bottomY){
+      ball.speedX = ball.speedX + .25;
       ball.speedX = -ball.speedX;
     }
   }
@@ -155,9 +164,7 @@ function runProgram(){
     if (obj.topY < 0 || obj.bottomY > BOARD_HEIGHT) {
       obj.speedY = -obj.speedY;
     } 
-    if (obj.leftX < 0 || obj.rightX > BOARD_WIDTH) {
-      obj.speedX = -obj.speedX;
-    } 
+    
   }
 
   
