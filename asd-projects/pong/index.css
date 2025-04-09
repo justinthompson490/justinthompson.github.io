@@ -31,14 +31,19 @@ p {
   position: absolute;
 }
 
+.score {
+  font-size : 100px;
+}
+
+
 h1 {
-  top: 10%;
+  top: 2%;
   left: 30%;
   position: absolute;
 }
 
 h2 {
-  top: 10%;
+  top: 0%;
   right: 30%;
   position: absolute;
 }

@@ -38,6 +38,9 @@ function runProgram(){
   var paddleLeft = createGameItem("#paddleLeft", 0, 0)
   var paddleRight = createGameItem("#paddleRight", 0, 0)
   var ball = createGameItem("#ball", (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1), (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1))
+  var leftScore = 0;
+  var rightScore = 0;
+  
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   $(document).on('keydown', handleKeyDown);                           // change 'eventType' to the type of event you want to handle
@@ -136,7 +139,8 @@ function runProgram(){
       obj.speedX = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1)
       obj.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1)
       if(obj.x > BOARD_WIDTH - obj.width){
-        //show player 1 score go up
+        leftScore++;
+        $("#leftScorePoints").text(leftScore)
       } else if(obj.x < 0){
         //show player 2 score go up
       }
@@ -150,11 +154,11 @@ function runProgram(){
     makeHitbox(paddle1);
     makeHitbox(paddle2);
     if(ball.leftX < paddle1.rightX && ball.topY > paddle1.topY && ball.bottomY < paddle1.bottomY){
-      ball.speedX = ball.speedX + .25;
+      ball.speedX++;
       ball.speedX = -ball.speedX;
     }
     if(ball.rightX > paddle2.leftX && ball.topY > paddle2.topY && ball.bottomY < paddle2.bottomY){
-      ball.speedX = ball.speedX + .25;
+      ball.speedX++;
       ball.speedX = -ball.speedX;
     }
   }
